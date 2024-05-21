@@ -130,6 +130,20 @@ export default function Employees() {
     });
   };
 
+  const onDeleteSelected = (id) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false,
+    });
+    selectedEmployeeIds.forEach(id => employeeService.deleteEmployee(id));
+    setRecords(employeeService.getAllEmployees());
+    setNotify({
+      isOpen: true,
+      message: 'Deleted Successfully',
+      type: 'error',
+    });
+  };
+
   return (
     <>
       
@@ -209,6 +223,22 @@ export default function Employees() {
             ))}
           </TableBody>
         </TblContainer>
+        <Controls.Button
+            text='Delete selected'
+            variant='outlined'
+            className=""
+            disabled={selectedEmployeeIds.length === 0}
+            onClick={() => {
+              setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure you want to delete the selected records?',
+                subTitle: "You can't undo this operation",
+                onConfirm: () => {
+                  onDeleteSelected();
+                },
+              });
+            }}
+          />
         <TblPagination />
       </Paper>
       <Popup
