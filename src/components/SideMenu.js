@@ -14,6 +14,14 @@ const useStyles = makeStyles({
     height: '100%',
     backgroundColor: '#253053'
   },
+  filterArea: {
+    margin: '10px',
+    background: '#fff',
+    padding: '10px',
+    borderRadius: '0.5em',
+    display: 'flex',
+    'flexDirection': 'column'
+  }
 });
 
 export default function SideMenu() {
@@ -28,16 +36,15 @@ export default function SideMenu() {
 
     return (
       <div className={classes.sideMenu}>
-        <div style={{ margin: '10px', background: '#fff', padding: '10px', borderRadius: '0.5em', display: 'flex', 'flexDirection': 'column' }}>
-            <Controls.Select
-            name='departmentId'
-            label='Filter by Department'
-            value={employeeFilter.departmentId}
-            onChange={handleInputChange}
-            options={getDepartmentCollection()}
-            
-            />
-            </div>
+        <div className={classes.filterArea}>
+          <Controls.Select
+          name='departmentId'
+          label='Filter by Department'
+          value={employeeFilter.departmentId}
+          onChange={handleInputChange}
+          options={getDepartmentCollection()}
+          />
         </div>
+      </div>
     )
 }
