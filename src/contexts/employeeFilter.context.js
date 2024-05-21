@@ -2,13 +2,13 @@ import { createContext, useState } from 'react';
 
 
 export const EmployeeFilterContext = createContext({
-    departmentId: null,
+    departmentId: '',
     fullName: ''
 });
 
 export const EmployeeFilterProvider = ({ children }) => {
   const [employeeFilter, setEmployeeFilter] = useState({
-    departmentId: null,
+    departmentId: '',
     fullName: ''
   });
 

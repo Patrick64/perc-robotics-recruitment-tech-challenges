@@ -67,9 +67,8 @@ export default function Employees() {
     fn: (items) => {
       return items.filter((x) => {
         const { departmentId, fullName } = employeeFilter;
-        
         const matchFullName = (fullName === '' || x.fullName.toLowerCase().includes(fullName.toLowerCase()));
-        const matchdepartmentId = (departmentId === null || x.departmentId === departmentId);
+        const matchdepartmentId = (departmentId === '' || x.departmentId === departmentId);
         return matchFullName && matchdepartmentId;
       });
     }
