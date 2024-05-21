@@ -147,7 +147,7 @@ export default function Employees() {
     <>
       
       <PageHeader
-        title={`New Employee ${employeeFilter.departmentId}`}
+        title="New Employee"
         subTitle='Form design with validation'
         icon={<PeopleOutlineTwoToneIcon fontSize='large' />}
       />
