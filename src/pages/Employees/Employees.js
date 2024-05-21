@@ -10,6 +10,7 @@ import {
   TableCell,
   Toolbar,
   InputAdornment,
+  Checkbox,
 } from '@material-ui/core';
 import useTable from '../../components/useTable';
 import * as employeeService from '../../services/employeeService';
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const headCells = [
+  { id: 'select', label: '' },
   { id: 'fullName', label: 'Employee Name' },
   { id: 'email', label: 'Email Address (Personal)' },
   { id: 'mobile', label: 'Mobile Number' },
@@ -49,6 +51,7 @@ export default function Employees() {
   const classes = useStyles();
   const { employeeFilter, setEmployeeFilter } = useContext(EmployeeFilterContext);
   const [recordForEdit, setRecordForEdit] = useState(null);
+  const [selectedEmployeeIds, setSelectedEmployeeIds] = useState([]);
   const [records, setRecords] = useState(employeeService.getAllEmployees());
 
   const [openPopup, setOpenPopup] = useState(false);
@@ -85,6 +88,12 @@ export default function Employees() {
     let target = e.target;
     setEmployeeFilter({ ...employeeFilter, [target.name]: target.value });
   };
+
+  const handleSelect = (id, { target }) => {
+    console.log('id', id);
+    // const id = target.dataset.id;
+    setSelectedEmployeeIds(selectedEmployeeIds.includes(id) ? selectedEmployeeIds.filter(x => x !== id) : [...selectedEmployeeIds, id]);
+  }
 
 
 
@@ -160,6 +169,13 @@ export default function Employees() {
           <TableBody>
             {recordsAfterPagingAndSorting().map((item) => (
               <TableRow key={item.id}>
+                <TableCell>
+                  <Checkbox
+                    checked={selectedEmployeeIds.includes(item.id)}
+                    onChange={handleSelect.bind(this,item.id)}
+                    
+                  />
+                </TableCell>
                 <TableCell>{item.fullName}</TableCell>
                 <TableCell>{item.email}</TableCell>
                 <TableCell>{item.mobile}</TableCell>
