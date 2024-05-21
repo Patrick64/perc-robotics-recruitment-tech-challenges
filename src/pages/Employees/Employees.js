@@ -11,6 +11,7 @@ import {
   Toolbar,
   InputAdornment,
   Checkbox,
+  Grid,
 } from '@material-ui/core';
 import useTable from '../../components/useTable';
 import * as employeeService from '../../services/employeeService';
@@ -89,9 +90,7 @@ export default function Employees() {
     setEmployeeFilter({ ...employeeFilter, [target.name]: target.value });
   };
 
-  const handleSelect = (id, { target }) => {
-    console.log('id', id);
-    // const id = target.dataset.id;
+  const handleSelect = (id) => {
     setSelectedEmployeeIds(selectedEmployeeIds.includes(id) ? selectedEmployeeIds.filter(x => x !== id) : [...selectedEmployeeIds, id]);
   }
 
@@ -223,7 +222,9 @@ export default function Employees() {
             ))}
           </TableBody>
         </TblContainer>
-        <Controls.Button
+        <Grid container spacing={2}>
+        <Grid item md={4}>
+          <Controls.Button
             text='Delete selected'
             variant='outlined'
             className=""
@@ -238,8 +239,12 @@ export default function Employees() {
                 },
               });
             }}
-          />
-        <TblPagination />
+            />
+          </Grid>
+          <Grid item md={8}>
+            <TblPagination />
+          </Grid>
+        </Grid>
       </Paper>
       <Popup
         title='Employee Form'
