@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import EmployeeForm from './EmployeeForm';
 import PageHeader from '../../components/PageHeader';
 import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleOutlineTwoTone';
@@ -21,6 +21,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
 import Notification from '../../components/Notification';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { EmployeeFilterContext } from '../../contexts/employeeFilter.context';
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -46,6 +47,7 @@ const headCells = [
 
 export default function Employees() {
   const classes = useStyles();
+  const { employeeFilter, setEmployeeFilter } = useContext(EmployeeFilterContext);
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [records, setRecords] = useState(employeeService.getAllEmployees());
   const [filterFn, setFilterFn] = useState({
@@ -120,8 +122,9 @@ export default function Employees() {
 
   return (
     <>
+      
       <PageHeader
-        title='New Employee'
+        title={`New Employee ${employeeFilter.departmentId}`}
         subTitle='Form design with validation'
         icon={<PeopleOutlineTwoToneIcon fontSize='large' />}
       />
