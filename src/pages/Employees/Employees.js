@@ -50,11 +50,7 @@ export default function Employees() {
   const { employeeFilter, setEmployeeFilter } = useContext(EmployeeFilterContext);
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [records, setRecords] = useState(employeeService.getAllEmployees());
-  const [filterFn, setFilterFn] = useState({
-    fn: (items) => {
-      return items;
-    },
-  });
+
   const [openPopup, setOpenPopup] = useState(false);
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -67,6 +63,18 @@ export default function Employees() {
     subTitle: '',
   });
 
+  const filterFn = {
+    fn: (items) => {
+      return items.filter((x) => {
+        const { departmentId, fullName } = employeeFilter;
+        
+        const matchFullName = (fullName === '' || x.fullName.toLowerCase().includes(fullName.toLowerCase()));
+        const matchdepartmentId = (departmentId === null || x.departmentId === departmentId);
+        return matchFullName && matchdepartmentId;
+      });
+    }
+  };
+
   const {
     TblContainer,
     TblHead,
@@ -76,16 +84,10 @@ export default function Employees() {
 
   const handleSearch = (e) => {
     let target = e.target;
-    setFilterFn({
-      fn: (items) => {
-        if (target.value === '') return items;
-        else
-          return items.filter((x) =>
-            x.fullName.toLowerCase().includes(target.value.toLowerCase())
-          );
-      },
-    });
+    setEmployeeFilter({ ...employeeFilter, [target.name]: target.value });
   };
+
+
 
   const addOrEdit = (employee, resetForm) => {
     if (employee.id === 0) employeeService.insertEmployee(employee);
@@ -141,6 +143,7 @@ export default function Employees() {
               ),
             }}
             onChange={handleSearch}
+            name='fullName'
           />
           <Controls.Button
             text='Add New'

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { , makeStyles } from '@material-ui/core';
+import {  makeStyles } from '@material-ui/core';
 import { getDepartmentCollection} from '../services/employeeService'
 import Controls from './controls/Controls';
 import { EmployeeFilterContext } from '../contexts/employeeFilter.context';
